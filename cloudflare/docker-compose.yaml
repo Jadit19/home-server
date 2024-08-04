@@ -1,0 +1,12 @@
+name: cloudflare
+
+services:
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflare
+    restart: always
+    networks:
+      - intranet
+    command: tunnel --no-autoupdate run --token ${TOKEN}
+    env_file:
+      - .env

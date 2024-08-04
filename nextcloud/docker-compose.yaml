@@ -1,0 +1,39 @@
+name: nextcloud
+
+services:
+  nextcloud-db:
+    image: mariadb:11.1.2
+    container_name: nextcloud-db
+    restart: unless-stopped
+    networks:
+      - intranet
+    volumes:
+      - ${BASE_DIR}/mariadb:/var/lib/mysql
+    env_file:
+      - .env
+
+  nextcloud-redis:
+    image: redis:alpine
+    container_name: nextcloud-redis
+    restart: unless-stopped
+    networks:
+      - intranet
+    mem_limit: 0.5g
+
+  nextcloud:
+    image: nextcloud:29
+    container_name: nextcloud
+    restart: unless-stopped
+    networks:
+      - intranet
+    volumes:
+      - ${BASE_DIR}:/var/www/html
+      - ${BASE_DIR}/data:/var/www/html/data
+      - ${BASE_DIR}/config:/var/www/html/config
+      - ${BASE_DIR}/data:/var/www/html/custom_apps
+      - ${BASE_DIR}/themes:/var/www/html/themes
+    environment:
+      MYSQL_HOST: nextcloud-db
+      REDIS_HOST: nextcloud-redis
+    env_file:
+      - .env

@@ -1,0 +1,25 @@
+name: nginx
+
+services:
+  nginx:
+    image: nginx:1.26.0-alpine
+    container_name: nginx
+    restart: always
+    networks:
+      - intranet
+    ports:
+      - 80:80         # For nextcloud
+      - 2222:2222     # For gitea ssh
+      - 3000:3000     # For gitea http
+      - 8000:8000     # For expresso
+      - 8096:8096     # For jellyfin
+      - 9000:9000     # For portainer
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./configs:/etc/nginx/ssl/configs
+    depends_on:
+      - expresso
+      - gitea
+      - jellyfin
+      - nextcloud
+      - portainer

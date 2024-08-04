@@ -1,0 +1,26 @@
+name: jellyfin
+
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:10.9.3
+    container_name: jellyfin
+    networks:
+      - intranet
+    volumes:
+      - ${BASE_DIR}/config:/config
+      - ${BASE_DIR}/cache:/cache
+      - type: bind
+        source: ${DATA_DIR}/English
+        target: /media/English
+        read_only: true
+      - type: bind
+        source: ${DATA_DIR}/Hindi
+        target: /media/Hindi
+        read_only: true
+      - type: bind
+        source: ${DATA_DIR}/Anime
+        target: /media/Anime
+        read_only: true
+    restart: always
+    env_file:
+      - .env

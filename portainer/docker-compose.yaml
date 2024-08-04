@@ -1,0 +1,15 @@
+name: portainer
+
+services:
+  portainer:
+    image: portainer/portainer-ce:linux-arm64-2.20.2
+    container_name: portainer
+    command: -H unix:///var/run/docker.sock
+    restart: always
+    volumes:
+      - ${BASE_DIR}:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - intranet
+    env_file:
+      - .env

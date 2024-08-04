@@ -1,0 +1,9 @@
+name: expresso
+
+services:
+  expresso:
+    image: jadit19/expresso:0.1.0
+    container_name: expresso
+    restart: unless-stopped
+    networks:
+      - intranet
