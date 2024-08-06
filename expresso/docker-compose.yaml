@@ -2,8 +2,10 @@ name: expresso
 
 services:
   expresso:
-    image: jadit19/expresso:0.1.0
+    image: jadit19/expresso:0.1.2
     container_name: expresso
     restart: unless-stopped
     networks:
       - intranet
+    environment:
+      - PORT=8000
